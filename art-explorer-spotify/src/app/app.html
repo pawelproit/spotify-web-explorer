@@ -40,9 +40,10 @@
 </style>
 
 
-<main class="main">
-  <div class="container">
-    <h1>Witaj w aplikacji Spotify Artist Explorer</h1>
-    <button>Zaloguj przez Spotify</button>
-  </div>
-</main>
+<h1 class="heading"><strong> Spotify Auth</strong></h1>
+
+<div class="container">
+    <button (click)="onAuthClick()">Zaloguj przez Spotify</button>
+</div>
+
+<router-outlet></router-outlet>
