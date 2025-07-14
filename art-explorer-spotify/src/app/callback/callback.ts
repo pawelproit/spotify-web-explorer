@@ -39,7 +39,7 @@ export class Callback implements OnInit {
               },
               complete:() => {
                 console.log('done');
-                this._router.navigate(['']);
+                this._router.navigate(['search']);
               }
             })
         }
