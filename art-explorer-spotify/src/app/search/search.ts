@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser , CommonModule , NgIf} from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
+import { SpotifyUser } from '../spotify-user';
 
 @Component({
   selector: 'app-search',
@@ -11,7 +12,8 @@ import { PLATFORM_ID } from '@angular/core';
   styleUrl: './search.scss'
 })
 export class Search implements OnInit {
-  userInfo:any = null;
+  userInfo: SpotifyUser | null = null;
+
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {};
 
@@ -22,7 +24,7 @@ export class Search implements OnInit {
         const authObject = JSON.parse(authObjectJson);
         const accessToken = authObject.access_token;
         if(accessToken) {
-          this.http.get('https://api.spotify.com/v1/me',{
+          this.http.get<SpotifyUser>('https://api.spotify.com/v1/me',{
             headers: { Authorization: `Bearer ${accessToken}` }
           }).subscribe({
             next: (user) => this.userInfo = user,

@@ -42,13 +42,6 @@
 <div class="main">
   <div class="container">
     <h1 class="heading"><strong>Spotify Auth</strong></h1>
-
-    <button *ngIf="!userAuthenticated" (click)="onAuthClick()">Zaloguj przez Spotify</button>
-
-    <div *ngIf="userAuthenticated">
-      <p>Jesteś zalogowany!</p>
-      <div>Auth Object:</div>
-      <pre>{{ authObject | json }}</pre>
-    </div>
+    <button (click)="onAuthClick()">Zaloguj przez Spotify</button>
   </div>
 </div>

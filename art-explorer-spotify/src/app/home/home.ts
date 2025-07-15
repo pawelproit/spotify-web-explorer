@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { CommonModule, JsonPipe, NgIf, isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
@@ -29,25 +29,13 @@ async function generateCodeChallenge(codeVerifier: string): Promise<string> {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, JsonPipe, NgIf],
+  imports: [CommonModule],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
-export class Home implements OnInit {
-  authObject: any = null;
-  userAuthenticated: boolean = false;
 
+export class Home {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
-
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const authObjectJson = localStorage.getItem('auth_object');
-      if (authObjectJson) {
-        this.authObject = JSON.parse(authObjectJson);
-        this.userAuthenticated = true;
-      }
-    }
-  }
 
   async onAuthClick() {
     if (isPlatformBrowser(this.platformId)) {
