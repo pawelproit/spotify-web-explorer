@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccesToken } from '../access_token_service/acces-token';
+import { AccesToken } from '../services/access_token_service/acces-token';
 import { isPlatformBrowser } from '@angular/common';
 
 
@@ -13,7 +13,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 
 export class Callback implements OnInit {
-  constructor(private accesTokenService: AccesToken, private _router: Router, @Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(private accessTokenService: AccesToken, private _router: Router, @Inject(PLATFORM_ID) private platformId: Object) { }
   
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId))
@@ -30,7 +30,7 @@ export class Callback implements OnInit {
             this._router.navigate(['']);
           }
           else {
-            this.accesTokenService
+            this.accessTokenService
               .getData(returnedCode,previousCodeVerifier)
               .subscribe({
                 next:(result:any) => {
@@ -43,6 +43,8 @@ export class Callback implements OnInit {
                 },
                 complete:() => {
                   console.log('done');
+                  localStorage.removeItem('auth-state');
+                  localStorage.removeItem('code-verifier');
                   this._router.navigate(['search']);
                 }
               })

@@ -2,7 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser , CommonModule , NgIf} from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
-import { SpotifyUser } from '../spotify-user';
+import { SpotifyUser } from '../interfaces/spotify-user';
+import { AccesToken } from '../services/access_token_service/acces-token';
+import { Data } from '../services/data_service/data';
 
 @Component({
   selector: 'app-search',
@@ -15,23 +17,19 @@ export class Search implements OnInit {
   userInfo: SpotifyUser | null = null;
 
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {};
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private _platformId: Object, private authService: AccesToken , private dataService: Data) {};
 
   ngOnInit(): void {
-    if(isPlatformBrowser(this.platformId)){
-      const authObjectJson = localStorage.getItem('auth_object');
-      if(authObjectJson) {
-        const authObject = JSON.parse(authObjectJson);
-        const accessToken = authObject.access_token;
-        if(accessToken) {
-          this.http.get<SpotifyUser>('https://api.spotify.com/v1/me',{
-            headers: { Authorization: `Bearer ${accessToken}` }
-          }).subscribe({
-            next: (user) => this.userInfo = user,
-            error: (err) => console.error('Błąd pobierania user info: ',err)
-          });
-        }
-      }
+    if(isPlatformBrowser(this._platformId)){
+      this.dataService.getSpotifyUser().subscribe({
+        next: (user) => this.userInfo = user,
+        error: (err) => console.error('Błąd pobierania user info: ', err)
+        });
     }
   }
+
+  logout () : void {
+    this.authService.onLogout();
+  }
 }
+

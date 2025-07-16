@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
 })
 
 export class AccesToken {
-  client_id = '6fa458202a164dcc917553462cc12ff1';
+  clientId = '6fa458202a164dcc917553462cc12ff1';
   url = 'https://accounts.spotify.com/api/token';
-  redirect_uri = 'http://127.0.0.1:53661/callback';
+  redirectUri = 'http://127.0.0.1:53661/callback';
 
   constructor(private http: HttpClient) {};
 
@@ -20,12 +20,22 @@ export class AccesToken {
   getData (code: string , codeVerifier : string): Observable<any> {
     const body = new HttpParams()
     .set('code', code)
-    .set('redirect_uri', this.redirect_uri)
+    .set('redirect_uri', this.redirectUri)
     .set('grant_type', 'authorization_code')
-    .set('client_id', this.client_id)
+    .set('client_id', this.clientId)
     .set('code_verifier', codeVerifier)
 
     return this.http.post(this.url , body , {headers: this.headers})
   }
 
+  onLogout(): void {
+    localStorage.removeItem('auth_object');
+    localStorage.removeItem('auth-state');
+    localStorage.removeItem('code-verifier');
+    window.location.href = '/';
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('auth_object');
+  }
 }
