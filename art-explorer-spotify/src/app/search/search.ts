@@ -17,19 +17,19 @@ export class Search implements OnInit {
   userInfo: SpotifyUser | null = null;
 
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private _platformId: Object, private authService: AccesToken , private dataService: Data) {};
+  constructor(private _http: HttpClient, @Inject(PLATFORM_ID) private _platformId: Object, private _authService: AccesToken , private _dataService: Data) {};
 
   ngOnInit(): void {
     if(isPlatformBrowser(this._platformId)){
-      this.dataService.getSpotifyUser().subscribe({
+      this._dataService.getSpotifyUser().subscribe({
         next: (user) => this.userInfo = user,
         error: (err) => console.error('Błąd pobierania user info: ', err)
         });
     }
   }
 
-  logout () : void {
-    this.authService.onLogout();
+  onLogout () : void {
+    this._authService.onLogout();
   }
 }
 

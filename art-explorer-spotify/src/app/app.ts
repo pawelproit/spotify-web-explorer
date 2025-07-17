@@ -13,6 +13,4 @@ import { HttpParams } from '@angular/common/http';
 
 export class App {
   protected readonly title = signal('art-explorer-spotify');
-
-  //test
 }

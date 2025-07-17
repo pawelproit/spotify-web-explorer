@@ -14,11 +14,11 @@ import { HttpParams } from '@angular/common/http';
 export class Home {
   constructor(@Inject(PLATFORM_ID) private _platformId: Object) {}
 
-  async onAuthClick() {
+  async onAuthClick(): Promise <void> {
     if (isPlatformBrowser(this._platformId)) {
-      const generatedState: string = this._randomString(16);
-      const codeVerifier: string = this._randomString(128);
-      const codeChallenge = await this._generateCodeChallenge(codeVerifier);
+      const generatedState: string = this.randomString(16);
+      const codeVerifier: string = this.randomString(128);
+      const codeChallenge = await this.generateCodeChallenge(codeVerifier);
 
       localStorage.setItem('auth-state', generatedState);
       localStorage.setItem('code-verifier', codeVerifier);
@@ -40,7 +40,7 @@ export class Home {
     }
   }
 
-  private async  _generateCodeChallenge(codeVerifier: string): Promise<string> {
+  private async  generateCodeChallenge(codeVerifier: string): Promise<string> {
     const encoder = new TextEncoder();
     const data = encoder.encode(codeVerifier);
     const digest = await window.crypto.subtle.digest('SHA-256', data);
@@ -54,7 +54,7 @@ export class Home {
     return base64;
   }
 
-  private _randomString(length: number): string {
+  private randomString(length: number): string {
     const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let result = '';
     for (let i = length; i > 0; i--) {

@@ -3,7 +3,7 @@
   <p>ID użytkownika: {{ userInfo.id }}</p>
   <p>Email: {{ userInfo.email }}</p>
   <img *ngIf="userInfo.images?.length" [src]="userInfo.images[0].url" width="100">
-  <button (click)="logout()">Wyloguj</button>
+  <button (click)="onLogout()">Wyloguj</button>
 </div>
 <ng-template #notLoggedIn>
   <p>Nie jesteś zalogowany lub nie udało się pobrać danych użytkownika.</p>
