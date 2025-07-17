@@ -1,0 +1,39 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #b7f7b7;
+  width: 100%;
+}
+
+.main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+}
+
+.container {
+  text-align: center;
+  background: rgba(255,255,255,0.8);
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #a0e6a0;
+  margin-top: 40px;
+}
+
+button {
+  background-color: #1db954;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: #1ed760;
+  }
+}
