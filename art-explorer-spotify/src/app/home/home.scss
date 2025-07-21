@@ -1,5 +1,7 @@
 .body-background {
   min-height: 100vh;
+  padding: 16px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,7 +9,8 @@
 }
 
 .spotify-main-card {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   min-height: 380px;
   padding: 32px 24px;
   border-radius: 24px;
@@ -61,4 +64,23 @@
 }
 .spotify-main-card button[mat-raised-button]:hover {
   background-color: #18ac4d;
+}
+
+@media (max-width: 480px) {
+  .spotify-main-card {
+    padding: 24px 16px;
+  }
+
+  .spotify-main-card .mat-card-title {
+    font-size: 1.6rem;
+  }
+
+  .spotify-main-card .mat-card-content p {
+    font-size: 1rem;
+  }
+
+  .spotify-main-card button[mat-raised-button] {
+    width: 100%;
+    padding: 12px 20px;
+  }
 }
