@@ -5,12 +5,12 @@ import { PLATFORM_ID } from '@angular/core';
 import { SpotifyUser } from '../interfaces/spotify-user';
 import { AccesToken } from '../services/access_token_service/acces-token';
 import { Data } from '../services/data_service/data';
-import { FormsModule } from '@angular/forms';
+import { MaterialModule } from "../material/material-module";
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule , NgIf, FormsModule],
+  imports: [CommonModule, NgIf,  MaterialModule],
   templateUrl: './search.html',
   styleUrl: './search.scss'
 })
