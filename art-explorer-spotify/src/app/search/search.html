@@ -1,6 +1,5 @@
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<mat-toolbar color="primary" class="app-toolbar" style="justify-content: space-between;">
-  <div class="toolbar-left" style="display: flex; align-items: center; gap: 12px;">
+<mat-toolbar color="primary" class="app-toolbar">
+  <div class="toolbar-left">
     <span class="app-title">Spotify Artist Explorer</span>
   </div>
 
@@ -9,15 +8,19 @@
       <mat-label>Wpisz nazwę artysty</mat-label>
       <input matInput [(ngModel)]="searchQuery" name="artist" required />
     </mat-form-field>
-    <button mat-icon-button type="submit" color="accent" style="margin-left: 8px;">
+    <button mat-icon-button type="submit" color="accent" class="search-icon-button">
       <mat-icon>search</mat-icon>
     </button>
   </form>
 
-  <div class="toolbar-user" style="display: flex; align-items: center; gap: 12px;">
-    <ng-container *ngIf="userInfo;">
+  <div class="toolbar-user">
+    <ng-container *ngIf="userInfo">
       <span class="user-name">{{ userInfo.display_name }}</span>
-      <img *ngIf="userInfo.images?.length" [src]="userInfo.images[0].url" width="36" height="36" style="border-radius:50%;" />
+      <img *ngIf="userInfo.images?.length"
+           [src]="userInfo.images[0].url"
+           width="36"
+           height="36"
+           class="user-avatar" />
       <button mat-stroked-button color="warn" (click)="onLogout()">
         <mat-icon>logout</mat-icon> Wyloguj
       </button>
@@ -27,24 +30,28 @@
 
 <div class="main-content">
   <div class="search-layout">
-  <div *ngIf="artists.length === 0 && !selectedArtist && userInfo" class="welcome-message">
-    <h2>Witaj,wpisz nazwę artysty i zacznij explorować swiat Spotify :)</h2>
-  </div>
-    <mat-card class="search" *ngIf="artists.length > 0 && !selectedArtist">
-      <mat-card-title>Wyniki wyszukiwania</mat-card-title>
-      <mat-card-content>
-        <mat-list *ngIf="artists.length > 0 && !selectedArtist">
-          <mat-list-item *ngFor="let a of artists" (click)="onSelectArtist(a)" class="artist-item">
-            <img *ngIf="a.images?.length" [src]="a.images[0].url" width="40" />
-            <span class="artist-name">  {{ a.name }}</span>
-          </mat-list-item>
-        </mat-list>
-        <div *ngIf="searchError" class="error" style="margin-top: 8px;">{{ searchError }}</div>
-      </mat-card-content>
-    </mat-card>
+    <ng-container *ngIf="(artists$ | async) as artists">
+      <div *ngIf="artists.length === 0 && (selectedArtist$ | async) === null && userInfo" class="welcome-message">
+        <h2>Witaj, wpisz nazwę artysty i zacznij eksplorować świat Spotify :)</h2>
+      </div>
+      <mat-card class="search" *ngIf="artists.length > 0 && (selectedArtist$ | async) === null">
+        <mat-card-title>Wyniki wyszukiwania</mat-card-title>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item *ngFor="let a of artists" (click)="onSelectArtist(a)" class="artist-item">
+              <img *ngIf="a.images?.length" [src]="a.images[0].url" width="40" />
+              <span class="artist-name">{{ a.name }}</span>
+            </mat-list-item>
+          </mat-list>
+          <div *ngIf="(searchError$ | async) as error" class="error" style="margin-top: 8px;">
+            {{ error }}
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
 
-    <mat-card *ngIf="selectedArtist" class="artist-details">
-      <button mat-stroked-button color="primary" (click)="selectedArtist = null" style="margin-bottom: 16px;">
+    <mat-card *ngIf="(selectedArtist$ | async) as selectedArtist" class="artist-details">
+      <button mat-stroked-button color="primary" (click)="onSelectArtist(null)" class="back-button">
         <mat-icon>arrow_back</mat-icon> Powrót do listy
       </button>
       <mat-card-title>
@@ -52,16 +59,16 @@
       </mat-card-title>
       <mat-card-content>
         <p>
-          <strong>Gatunki : </strong>
+          <strong>Gatunki:</strong>
           <ng-container *ngIf="selectedArtist.genres?.length; else brakGatunkow">
             {{ selectedArtist.genres.join(', ') }}
           </ng-container>
           <ng-template #brakGatunkow>Brak danych</ng-template>
         </p>
-        <p><strong>Followers : </strong> {{ selectedArtist.followers.total }}</p>
+        <p><strong>Followers:</strong> {{ selectedArtist.followers.total }}</p>
         <img *ngIf="selectedArtist.images?.length" [src]="selectedArtist.images[0].url" width="200" />
         <p>
-          <strong>Profil Spotify : </strong>
+          <strong>Profil Spotify:</strong>
           <a mat-stroked-button color="primary" [href]="selectedArtist.external_urls.spotify" target="_blank">
             <mat-icon>open_in_new</mat-icon> Otwórz
           </a>

@@ -18,14 +18,17 @@ export class Data {
   }
 
   searchArtist(query:string): Observable<any> {
+    
     const accessToken = JSON.parse(localStorage.getItem('auth_object') || '{}').access_token;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${accessToken}`
     });
+
     const params = new HttpParams()
       .set('q',query)
       .set('type','artist')
       .set('limit','10')
+
     return this._http.get<any>(this._searchEndpoint, {headers,params});
   }
   
