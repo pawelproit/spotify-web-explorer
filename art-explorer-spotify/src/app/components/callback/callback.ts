@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccesToken } from '../services/access_token_service/acces-token';
+import { AccesToken } from '../../services/access_token_service/acces-token';
 import { isPlatformBrowser } from '@angular/common';
 
 

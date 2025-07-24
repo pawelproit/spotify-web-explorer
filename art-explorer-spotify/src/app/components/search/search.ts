@@ -1,16 +1,17 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { isPlatformBrowser, CommonModule, NgIf } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
-import { SpotifyUser } from '../interfaces/spotify-user';
-import { AccesToken } from '../services/access_token_service/acces-token';
-import { Data } from '../services/data_service/data';
-import { MaterialModule } from "../material/material-module";
-import { SearchServ } from '../services/search_service/search-serv';
+import { SpotifyUser } from '../../interfaces/spotify-user';
+import { AccesToken } from '../../services/access_token_service/acces-token';
+import { Data } from '../../services/data_service/data';
+import { MaterialModule } from "../../material/material-module";
+import { SearchServ } from '../../services/search_service/search-serv';
+import { Toolbar } from '../toolbar/toolbar';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule, NgIf, MaterialModule],
+  imports: [CommonModule, NgIf, MaterialModule,Toolbar],
   templateUrl: './search.html',
   styleUrl: './search.scss'
 })
@@ -52,8 +53,8 @@ export class Search implements OnInit {
     this._authService.onLogout();
   }
 
-  onSearchArtist(): void {
-    this._searchServ.searchArtist(this.searchQuery);
+  onSearchArtist(query: string): void {
+    this._searchServ.searchArtist(query);
   }
 
   onSelectArtist(artist: any): void {

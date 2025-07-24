@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { MaterialModule } from '../material/material-module';
+import { MaterialModule } from '../../material/material-module';
 
 @Component({
   selector: 'app-home',

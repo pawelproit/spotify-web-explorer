@@ -1,0 +1,29 @@
+<mat-toolbar color="primary" class="app-toolbar">
+  <div class="toolbar-left">
+    <span class="app-title">Spotify Artist Explorer</span>
+  </div>
+
+  <form *ngIf="userInfo" (ngSubmit)="onSubmit()" class="toolbar-search">
+    <mat-form-field appearance="fill">
+      <mat-label>Wpisz nazwę artysty</mat-label>
+      <input matInput [(ngModel)]="searchQuery" name="artist" required />
+    </mat-form-field>
+    <button mat-icon-button type="submit" color="accent" class="search-icon-button">
+      <mat-icon>search</mat-icon>
+    </button>
+  </form>
+
+  <div class="toolbar-user">
+    <ng-container *ngIf="userInfo as user">
+      <span class="user-name">{{ user.display_name }}</span>
+      <img *ngIf="user.images?.length"
+           [src]="user.images[0]?.url"
+           width="36"
+           height="36"
+           class="user-avatar" />
+      <button mat-stroked-button color="warn" (click)="onLogoutClick()">
+        <mat-icon>logout</mat-icon> Wyloguj
+      </button>
+    </ng-container>
+  </div>
+</mat-toolbar>

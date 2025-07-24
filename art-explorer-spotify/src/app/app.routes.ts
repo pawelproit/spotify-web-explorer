@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { Home } from './home/home';
-import { Callback } from './callback/callback';
-import { Search } from './search/search';
+import { Home } from './components/home/home';
+import { Callback } from './components/callback/callback';
+import { Search } from './components/search/search';
 import { tokenLoginGuard } from './guards/token-login-guard';
 
 export const routes: Routes = [

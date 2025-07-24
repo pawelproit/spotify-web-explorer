@@ -1,0 +1,34 @@
+.app-toolbar {
+  background-color: #1db954;  // zielony Spotify
+  color: white;
+  padding: 0 16px;
+
+  .toolbar-left {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  .toolbar-search {
+    flex: 1;
+    margin: 0 12px;
+  }
+
+  .search-icon-button {
+    margin-left: 8px;
+  }
+
+  .toolbar-user {
+    display: flex;
+    align-items: center;
+
+    .user-name {
+      margin-right: 10px;
+      font-weight: 600;
+    }
+
+    .user-avatar {
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+  }
+}
